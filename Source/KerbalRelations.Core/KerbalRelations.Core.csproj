@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Pure simulation code with no Unity/KSP references. Built on its own only for the unit tests;
+       the plugin project compiles these same source files into KerbalRelations.dll. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>KerbalRelations.Core</RootNamespace>
+    <AssemblyName>KerbalRelations.Core</AssemblyName>
+  </PropertyGroup>
+
+</Project>

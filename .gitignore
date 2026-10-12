@@ -1,0 +1,7 @@
+bin/
+obj/
+.vs/
+*.user
+Source/KSPRoot.user.props
+GameData/KerbalRelations/Plugins/*.dll
+GameData/KerbalRelations/Plugins/*.pdb
