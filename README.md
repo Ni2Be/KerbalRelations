@@ -7,6 +7,8 @@ couples can lay eggs that hatch into children who grow up to join the crew. Kerb
 birthplace, earn ribbons for what they do, and Mission Control offers missions about them. A
 relationship graph shows who knows whom.
 
+![The Kerbal Relations window: every Kerbal with their happiness, the bonds between them, and the ribbons of the selected Kerbal](docs/img/Overview.png)
+
 Works on its own, and together with [USI Life Support](https://github.com/UmbraSpaceIndustries/USI-LS)
 and [MKS](https://github.com/UmbraSpaceIndustries/MKS), where it replaces the Kolony Growth timer.
 
