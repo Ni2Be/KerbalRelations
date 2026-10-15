@@ -31,6 +31,9 @@ namespace KerbalRelations.Effects
             Patch(harmony, "experience",
                 AccessTools.Method(typeof(ProtoCrewMember), "CalculateExperiencePoints", new[] { typeof(GameParameters), typeof(Game.Modes) }),
                 postfix: nameof(Patches.ExperiencePostfix));
+            Patch(harmony, "levels set by cheats",
+                AccessTools.Method(typeof(KerbalRoster), "SetExperienceLevel", new[] { typeof(ProtoCrewMember), typeof(int), typeof(GameParameters), typeof(Game.Modes) }),
+                postfix: nameof(Patches.LevelSetPostfix));
 
             Patch(harmony, "EVA button for eggs and children",
                 AccessTools.Method(typeof(KerbalPortrait), "CanEVA"),
@@ -113,6 +116,12 @@ namespace KerbalRelations.Effects
             var extra = __instance.ExtraExperience;
             if (extra != 0f)
                 __result = Mathf.Max(0f, __result + extra);
+        }
+
+        /// <summary>The cheat menu's "max level" and the Mission Builder set a level that should stick.</summary>
+        public static void LevelSetPostfix(ProtoCrewMember pcm, GameParameters parameters)
+        {
+            XpTracker.LevelSet(pcm, parameters);
         }
 
         /// <summary>

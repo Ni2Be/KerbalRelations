@@ -28,11 +28,7 @@ namespace KerbalRelations.Effects
                     continue;
                 }
 
-                // The same calculation stock uses, without our extra experience on top.
-                double baseXp = advanced.ImmediateLevelUp
-                    ? KerbalRoster.CalculateExperience(pcm.careerLog, pcm.flightLog)
-                    : KerbalRoster.CalculateExperience(pcm.careerLog);
-
+                double baseXp = BaseXp(pcm, advanced);
                 if (state.LastBaseXp >= 0d && baseXp > state.LastBaseXp + 1e-4)
                 {
                     var multiplier = ConfigLoader.Effects.GetMultiplier(EffectRegistry.Experience, state.Happiness);
@@ -45,6 +41,30 @@ namespace KerbalRelations.Effects
                 }
                 state.LastBaseXp = baseXp;
             }
+        }
+
+        /// <summary>
+        /// A level set directly (the cheat menu, the Mission Builder) is meant exactly: happiness neither adds
+        /// to nor takes from it, and the jump to it is not scaled later.
+        /// </summary>
+        public static void LevelSet(ProtoCrewMember pcm, GameParameters parameters)
+        {
+            if (pcm == null || parameters == null)
+                return;
+            if (pcm.ExtraExperience != 0f)
+                pcm.ExtraExperience = 0f;
+            var scenario = RelationsScenario.Instance;
+            KerbalState state;
+            if (scenario != null && scenario.Data.Kerbals.TryGetValue(pcm.name, out state) && state.LastBaseXp >= 0d)
+                state.LastBaseXp = BaseXp(pcm, parameters.CustomParams<GameParameters.AdvancedParams>());
+        }
+
+        // The same calculation stock uses, without our extra experience on top.
+        private static double BaseXp(ProtoCrewMember pcm, GameParameters.AdvancedParams advanced)
+        {
+            return advanced.ImmediateLevelUp
+                ? KerbalRoster.CalculateExperience(pcm.careerLog, pcm.flightLog)
+                : KerbalRoster.CalculateExperience(pcm.careerLog);
         }
     }
 }
